@@ -11,8 +11,28 @@
     <link href="" rel="stylesheet">
     <style>
         p,
+        h2,
         h3 {
-            text-align: center;
+            text-align: center;            
+        }
+
+        li {
+            line-height: 1.6;
+        }
+
+        .code-block {            
+            background: #282C34;
+            color: #fff;
+            padding: 3px 18px 3px 0;
+            min-width: 40%;
+
+        }
+
+        .flex-container {
+            display: flex;
+            display: -webkit-flex;
+            /* justify-content: flex-start;
+            -webkit-justify-content: flex-start; */
         }
     </style>
 </head>
@@ -20,8 +40,65 @@
 <body>
     <h3>Just a general concept</h3>
     <p>You can think of closure as a way to “remember” and continue to access a function’s scope (its variables) even once the
-        function has finished running.</p>
+        function has finished running.</p> 
 
+    <div class="flex-container">
+        <pre class="code-block">
+    function makeAdder(x) {
+        
+        function add(y) {
+            return x + y;
+        }
+
+        return add;
+
+    }
+        
+    var plusSeven = makeAdder(7);
+
+    console.log(plusSeven(100)); //107
+    console.log(plusSeven(1)); //8
+    console.log(plusSeven(23)); //30
+    console.log(plusSeven(10)); //17
+        </pre>
+        <ol>
+            <li>When we call makeAdder(7), we get back a reference to its inner add(..) that remembers x as 7. We call this function reference plusSeven(..)</li>
+            <li>When we call plusSeven(100), it adds 100 (its inner y) to the 7(remembered by x), and we get 107 as the result</li>
+     
+        </ol>
+    </div>
+
+    <div>
+        <h2 style="font-size: 16px">Modules</h4>
+        <p>The most common usage of closure in JavaScript is the module pattern. Modules let you define private implementation details (variables, functions) that are hidden from the outside world, as well as a public API that is accessible from the outside.</p>
+    </div>
+
+    <pre class="code-block">
+        function User(){
+            var username, password;
+
+            function doLogin(un, pw) {
+                username = un;
+                password = pw;
+            }
+
+            var publicAPI = {
+                login: doLogin
+            };
+
+            return publicAPI;
+
+        }
+
+        var puyih = User();
+
+        puyih.login("myUserName", "123pass"); 
+    
+    </pre>
+
+    <p>See console</p>
+    <p>To learn more about the basics of closures, check out YDKJS Up & Going page 52</p>
+    
 <script>
     function makeAdder(x) {
 
@@ -40,9 +117,36 @@
     console.log(plusSeven(23)); //30
     console.log(plusSeven(10)); //17
 
+    //modules
+
+    function User(){
+        var username, password;
+
+        function doLogin(un, pw) {
+            username = un;
+            password = pw;
+        }
+
+        var publicAPI = {
+            login: doLogin
+        };
+
+        return publicAPI;
+
+    }
+
+    var puyih = User();
+
+    puyih.login("myUserName", "123pass"); 
+
+
 
 
 </script>
+
+<p style="position: absolute; top: -5px; right: 5px; color: green">***</p>
 </body>
 
 </html>
+
+<!-- Learning from YDKJS UP & Going -->
